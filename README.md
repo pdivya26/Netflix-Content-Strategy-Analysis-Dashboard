@@ -56,6 +56,8 @@ The dashboard provides **interactive filters and dynamic insights**, allowing us
 
 <img width="1919" height="900" alt="NA5" src="https://github.com/user-attachments/assets/1e9ddf3e-fe66-4691-906a-7dd2fc86c047" />
 
+<img width="1355" height="761" alt="image" src="https://github.com/user-attachments/assets/ed03bace-d4c2-4179-ad88-cc10f44486b9" />
+
 ## Acknowledgements
 
 Dataset inspired by Netflix catalog data available publicly for analysis and learning purposes.
