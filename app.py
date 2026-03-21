@@ -30,11 +30,12 @@ st.markdown(f"""
     }}
     
     /* Tab Labels Font and Size */
-    div[data-baseweb="tab-list"] button p {{
-        font-size: 26px !important;
+    div[data-baseweb="tab-list"] button div {{
+        font-size: 18px !important;
         font-weight: 700 !important;
         padding: 14px 28px !important;
         margin-right: 10px !important;
+        margin-bottom: 15px !important;
         border-radius: 8px !important;
         color: #FFFFFF !important;
     }}
