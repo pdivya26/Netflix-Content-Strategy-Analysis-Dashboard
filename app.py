@@ -29,13 +29,10 @@ st.markdown(f"""
         box-shadow: none !important;
     }}
     
-    /* Target the Tab Labels Font and Size */
-    div[data-baseweb="tab-list"] button[data-baseweb="tab"] {{
+    /* Tab Labels Font and Size */
+    div[data-baseweb="tab-list"] button {{
         font-size: 26px !important;
         font-weight: 700 !important;
-        padding: 14px 28px !important;
-        margin-right: 10px !important;
-        border-radius: 8px !important;
         color: #FFFFFF !important;
     }}
 
