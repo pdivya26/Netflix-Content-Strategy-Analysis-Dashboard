@@ -19,8 +19,9 @@ st.markdown(f"""
         padding: 15px; 
         border-radius: 10px; 
         border-left: 5px solid {NETFLIX_RED}; 
+        margin-top: 10px;
     }}
-
+    
     /* Force Sharp Edges */
     [data-testid="stSidebar"] img {{
         border-radius: 0px !important;
@@ -29,8 +30,8 @@ st.markdown(f"""
         box-shadow: none !important;
     }}
     
-    /* Tab Labels Font and Size */
-    div[data-baseweb="tab-list"] button div {{
+    /* Target the Tab Labels Font and Size */
+    div[data-baseweb="tab-list"] button[data-baseweb="tab"] div {{
         font-size: 18px !important;
         font-weight: 700 !important;
         padding: 14px 28px !important;
@@ -41,20 +42,10 @@ st.markdown(f"""
     }}
 
     /* Active Tab Red Highlight */
-    div[data-baseweb="tab-list"] button[aria-selected="true"] {{
+    div[data-baseweb="tab-list"] button[aria-selected="true"] p {{
         color: {NETFLIX_RED} !important;
         margin-bottom: 10px;
-    }}
-
-    /* Font colors of insights */
-    .stAlert {{
-        border-radius: 0px !important;
-    }}
-
-    .stAlert p, .stAlert div {{
-        color: #FFFFFF !important; /* Force text to White */
-        font-size: 16px !important;
-        font-weight: 500 !important;
+        font-weight: bold;
     }}
 
     footer {{visibility: hidden;}}
@@ -74,8 +65,6 @@ df = load_data()
 st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", width=150)
 st.sidebar.header("Filters and Search")
 
-search_query = st.sidebar.text_input("Search Titles", "")
-
 type_filter = st.sidebar.multiselect(
     "Type",
     options=sorted(df['type'].dropna().unique()),
@@ -92,9 +81,6 @@ filtered_df = df[
     ((df['year_added'].between(year_filter[0], year_filter[1])) | (df['year_added'].isna()))
 ]
 
-if search_query:
-    filtered_df = filtered_df[filtered_df['title'].str.contains(search_query, case=False, na=False)]
-
 # ---- 4. Dynamic Insight Calculations ----
 def get_dynamic_insights(data):
     if data.empty:
@@ -102,7 +88,13 @@ def get_dynamic_insights(data):
     
     m_pct = (data['type'] == 'Movie').mean() * 100
     t_pct = (data['type'] == 'TV Show').mean() * 100
-    ins_mix = f"Movies dominate with {m_pct:.1f}% of the catalog, while TV Shows account for {t_pct:.1f}%."
+
+    if abs(m_pct - t_pct) < 2:
+        ins_mix = f"Movies and TV Shows are almost equally represented (~{m_pct:.1f}% vs {t_pct:.1f}%)."
+    elif m_pct > t_pct:
+        ins_mix = f"Movies dominate the catalog with {m_pct:.1f}%, compared to {t_pct:.1f}% TV Shows."
+    else:
+        ins_mix = f"TV Shows dominate the catalog with {t_pct:.1f}%, compared to {m_pct:.1f}% Movies."
     
     trend = data[data['year_added'].notna()].groupby('year_added').size().sort_index()
     if not trend.empty:
@@ -130,6 +122,7 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
+st.markdown("<br>", unsafe_allow_html=True)
 
 tab_viz, tab_explore = st.tabs(["Analytics", "Data Explorer"])
 
@@ -190,9 +183,16 @@ with tab_viz:
     # Row 2: Countries and Genres
     colC, colD = st.columns(2)
     with colC:
-        country_df = filtered_df[filtered_df['main_country'] != 'Unknown']['main_country'].value_counts().head(10).reset_index()
+        country_df = (
+            filtered_df[filtered_df['main_country'] != 'Unknown']['main_country']
+            .value_counts()
+            .reset_index()
+        )
+        country_df.columns = ['main_country', 'count']
+        country_df = country_df.sort_values(by='count', ascending=False).head(10)
         fig_country = px.bar(country_df, x='count', y='main_country', orientation='h', title='Top 10 Producing Countries',
         labels={'count': 'Number of Titles', 'main_country': 'Country'})
+        fig_country.update_yaxes(autorange="reversed")
         fig_country.update_traces(marker_color=NETFLIX_RED)
         st.plotly_chart(fig_country, use_container_width=True)
         st.info(f"{ins_country}")
@@ -214,7 +214,11 @@ with tab_viz:
     st.info(f"{ins_rating}")
 
     # Row 4: Duration Analysis
-    st.subheader("Content Duration Insights")
+    st.markdown("""
+    <h2 style='text-align: center; margin-top: 50px; margin-bottom: 20px;'>
+        Content Duration Insights
+    </h2>
+    """, unsafe_allow_html=True)
     col_dur1, col_dur2 = st.columns(2)
     
     with col_dur1:
@@ -244,6 +248,21 @@ with tab_viz:
 # ---- 6. Data Explorer Tab ----
 with tab_explore:
     st.subheader("Explore Filtered Catalog")
-    st.dataframe(filtered_df, use_container_width=True)
-    csv = filtered_df.to_csv(index=False).encode('utf-8')
-    st.download_button(label="Download CSV", data=csv, file_name='netflix_data.csv', mime='text/csv')
+
+    # Search inside explorer only
+    search_query = st.text_input("Search Titles")
+
+    temp_df = filtered_df.copy()
+
+    if search_query:
+        temp_df = temp_df[temp_df['title'].str.contains(search_query, case=False, na=False)]
+
+    st.dataframe(temp_df, use_container_width=True)
+
+    csv = temp_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="Download CSV",
+        data=csv,
+        file_name='netflix_data.csv',
+        mime='text/csv'
+    )
