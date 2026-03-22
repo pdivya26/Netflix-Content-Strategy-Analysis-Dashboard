@@ -1,4 +1,4 @@
-# Netflix Content Strategy Dashboard
+# Netflix Content Strategy Analysis Dashboard
 
 A complete data analytics project showcasing data cleaning, exploratory analysis, and interactive dashboard development using real-world Netflix data.
 
