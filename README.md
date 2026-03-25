@@ -1,27 +1,10 @@
 # Netflix Content Strategy Analysis 
 
-A complete data analytics project showcasing data cleaning, exploratory analysis, and interactive dashboard development using real-world Netflix data.
+This project analyzes Netflix’s content dataset to uncover trends in content production, distribution, and growth. It demonstrates a complete data workflow — from data cleaning and exploratory analysis to building interactive dashboards for insight generation.
 
 [**Check it out here!**](https://netflix-content-strategy-analytics-dashboard.streamlit.app/)
 
-## Project Overview
-
-This project analyzes Netflix’s content dataset to uncover trends in content production, distribution, and growth. It demonstrates a complete data workflow — from data cleaning and exploratory analysis to building interactive dashboards for insight generation.
-
-**Components include:**
-- Interactive Streamlit Dashboard
-- Power BI Dashboard
-- Data Cleaning & EDA in Google Colab
-
-The dashboard provides **interactive filters and dynamic insights**, allowing users to explore trends easily.
-
-## Key Insights
-
-- Netflix’s content additions peaked around **2019–2020**, indicating a period of rapid global expansion  
-- **Movies form the majority** of the catalog, while TV Shows show steady growth over time  
-- The **United States is the leading content producer**, with increasing contributions from other countries  
-- **Drama and International content** dominate the platform’s genre distribution  
-- A large portion of content is rated **TV-MA**, reflecting a focus on mature audiences  
+This dashboard provides a business-focused analytical view, complementing the Streamlit app with rich visual storytelling.
 
 ## Project Highlights
 
@@ -42,39 +25,33 @@ The dashboard provides **interactive filters and dynamic insights**, allowing us
 ## Features
 
 - Interactive filtering:
-  - Content Type (Movie / TV Show)
-  - Year Added
+- Content Type (Movie / TV Show)
+- Year Added
 - Dynamic visualizations:
-  - Content growth trends
-  - Genre and country analysis
-  - Ratings distribution
-  - Duration insights
+- Content growth trends
+- Genre and country analysis
+- Ratings distribution
+- Duration insights
 - Automatically generated insights based on selected filters
 - Clean and intuitive dashboard UI (Netflix-inspired theme)
 - Download filtered dataset
 
-## Data Cleaning & EDA (Colab)
+## Key Insights
 
-Performed using Google Colab:
-- Data cleaning (missing values, formatting)
-- Feature engineering (year_added, duration)
-- Exploratory Data Analysis (EDA)
-- Initial insights generation 
+- Netflix’s content additions peaked around **2019–2020**, indicating a period of rapid global expansion
+- **Movies form the majority** of the catalog, while TV Shows show steady growth over time
+- The **United States is the leading content producer**, with increasing contributions from other countries
+- **Drama and International content** dominate the platform’s genre distribution
+- A large portion of content is rated **TV-MA**, reflecting a focus on mature audiences
 
-## Power BI Dashboard
-
-An interactive Power BI dashboard designed to provide a comprehensive overview of Netflix content:
-
-- KPI card displaying total number of titles
-- Year slicer for dynamic filtering
-- Content distribution (Movies vs TV Shows)
-- Content growth trends over time
-- Global content distribution map
-- Ratings distribution analysis
-- Monthly content addition trends
-- Duration insights for Movies and TV Shows
-
-This dashboard provides a business-focused analytical view, complementing the Streamlit app with rich visual storytelling.
+## Strategic Recommendations
+- Expand TV shows to improve engagement and retention
+- Focus releases in mid–late year peak periods
+- Replicate 2018–2020 high-growth strategy
+- Prioritize TV-MA/TV-14 while exploring kids content
+- Keep movie runtime within 80–120 minutes
+- Expand into emerging markets with localized content
+- Invest in short (1–3 season) series formats
 
 ## Implementation Screenshots
 
@@ -94,14 +71,14 @@ This dashboard provides a business-focused analytical view, complementing the St
 
 ## Setup Instructions 
  
-**Clone the repository or download the ZIP**  
+**Clone the repository or download the ZIP**
 
-**Install dependencies**  
+**Install dependencies**
 ```
 pip install -r requirements.txt
 ```
 
-**Run the Streamlit app**  
+**Run the Streamlit app**
 ```
 streamlit run app.py
 ```
