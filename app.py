@@ -54,7 +54,7 @@ st.markdown(f"""
     }}
 
     .stAlert p, .stAlert div {{
-        color: #FFFFFF !important; /* Force text to White */
+        color: #FFFFFF 
         font-size: 16px !important;
         font-weight: 500 !important;
     }}
@@ -276,8 +276,7 @@ with tab_viz:
         title='Netflix Content Seasonality (Monthly Trend)',
         labels={'month_name': 'Month', 'count': 'Number of Titles'}
     )
-
-    # Add shading (THIS is the key part)
+    
     fig_month.update_traces(
         fill='tozeroy',
         line=dict(color=NETFLIX_RED, width=3),
@@ -285,6 +284,23 @@ with tab_viz:
     )
 
     st.plotly_chart(fig_month, use_container_width=True)
+
+    # ---- Dynamic Insight for Monthly Trend ----
+    if not month_df.empty:
+        peak_month_row = month_df.loc[month_df['count'].idxmax()]
+        low_month_row = month_df.loc[month_df['count'].idxmin()]
+
+        peak_month = peak_month_row['month_name']
+        peak_count = peak_month_row['count']
+
+        low_month = low_month_row['month_name']
+        low_count = low_month_row['count']
+
+        st.info(
+            f"Netflix adds the highest amount of content in {peak_month} "
+            f"({peak_count} titles), while {low_month} sees the lowest additions "
+            f"({low_count} titles), revealing strong seasonal release patterns."
+        )
 
 # ---- 6. Data Explorer Tab ----
 with tab_explore:
