@@ -14,12 +14,14 @@ px.defaults.color_discrete_sequence = [NETFLIX_RED]
 st.markdown(f""" 
     <style>
     /* Metric Card Styling */
-    .stMetric {{ 
-        background-color: #1a1a1a; 
+    /* Using Streamlit's native theme variables to support light/dark mode */
+    [data-testid="stMetric"] {{ 
+        background-color: var(--secondary-background-color); 
         padding: 15px; 
         border-radius: 10px; 
         border-left: 5px solid {NETFLIX_RED}; 
         margin-top: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for better pop in light mode */
     }}
     
     /* Force Sharp Edges */
@@ -38,7 +40,7 @@ st.markdown(f"""
         margin-right: 10px !important;
         margin-bottom: 15px !important;
         border-radius: 8px !important;
-        color: #FFFFFF !important;
+        color: var(--text-color) !important; /* Adapted for Light/Dark mode */
     }}
 
     /* Active Tab Red Highlight */
@@ -54,7 +56,7 @@ st.markdown(f"""
     }}
 
     .stAlert p, .stAlert div {{
-        color: #FFFFFF 
+        color: var(--text-color) !important; /* Fixed missing semicolon and adapted to theme */
         font-size: 16px !important;
         font-weight: 500 !important;
     }}
